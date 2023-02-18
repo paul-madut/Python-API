@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 
@@ -27,5 +27,15 @@ def home():
 
 
 @app.get("/get-item/{itemId}")
-def getItem(itemId: int):
+def getItem(itemId: int = Path(None, description="Id of item that you want", gt=0, lt=len(stats))):
     return stats[itemId]
+
+
+# Get Method that accepts a query by having "?{varName}={Query}" in the URI where varName is
+# is the key that you're searching in and Query is the value that is being searched in the dictionary
+@app.get("/get-by-name")
+def getItem(name: str):
+    for itemId in stats:
+        if stats[itemId]["name"] == name:
+            return stats[itemId]
+    return {"Data": "Not found"}
