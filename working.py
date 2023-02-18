@@ -39,3 +39,5 @@ def getItem(name: str):
         if stats[itemId]["name"] == name:
             return stats[itemId]
     return {"Data": "Not found"}
+
+# Post Method that adds an item to the "stats "
